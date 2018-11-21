@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+           id="cordova-plugin-hgu-hce"
+      version="0.0.1">
+    <name>SMTCAT</name>
+    <description>Cordova SMTCAT Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova, hce, plugin</keywords>
+    
+    <info>
+		Cordova HGUHCE plugin v0.0.1
+	</info>
+	
+    <js-module src="www/HGUHCE.js" name="HGUHCE">
+	    <clobbers target="HGUHCE" />
+    </js-module>
+
+    <engines>
+	    <engine name="cordova-android" version=">=4.0.0" />
+    </engines>
+
+    <!-- ANDROID CONFIGURATION -->
+    <platform name="android">
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-feature android:name="android.hardware.nfc" android:required="false" />
+
+            <uses-permission android:name="android.permission.NFC" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <service
+                android:name="edu.handong.smart.hce.MyHostApduService"
+                android:exported="true"
+                android:permission="android.permission.BIND_NFC_SERVICE" >
+                <intent-filter>
+                    <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
+                </intent-filter>
+
+                <meta-data
+                    android:name="android.nfc.cardemulation.host_apdu_service"
+                    android:resource="@xml/apduservice" />
+            </service>
+		</config-file>
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="HGUHCE" >
+                <param name="android-package" value="kr.co.itsm.plugin.HGUHCE"/>
+                <param name="onload" value="true" />
+            </feature>
+		</config-file>
+
+        <source-file src="src/android/HGUHCE.java" target-dir="src/kr/co/itsm/plugin" />
+        <source-file src="src/android/MyHostApduService.java" target-dir="src/kr/co/itsm/plugin" />
+        <source-file src="res/apduservice.xml" target-dir="res/xml" />
+    </platform>
+</plugin>
