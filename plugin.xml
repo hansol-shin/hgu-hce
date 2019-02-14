@@ -31,7 +31,7 @@
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <service
-                android:name="edu.handong.smart.hce.MyHostApduService"
+                android:name="kr.co.itsm.plugin.MyHostApduService"
                 android:exported="true"
                 android:permission="android.permission.BIND_NFC_SERVICE" >
                 <intent-filter>
